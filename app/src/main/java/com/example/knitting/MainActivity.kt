@@ -75,7 +75,7 @@ fun NavBar(navController: NavController){
     ){
         Text("Главная",
             Modifier
-                .weight(0.33f)
+                .weight(0.25f)
                 .clickable { navController.navigate(NavRoutes.Home.route) }
                 .padding(vertical = 20.dp),
             fontSize = 12.sp,
@@ -83,22 +83,25 @@ fun NavBar(navController: NavController){
             color= Color(0xFFFFFFFF))
         Text("Все уроки",
             Modifier
-                .weight(0.33f)
-                .clickable { navController.navigate(NavRoutes.Lessons.route) },
+                .weight(0.25f)
+                .clickable { navController.navigate(NavRoutes.Lessons.route) }
+                .padding(vertical = 20.dp),
             fontSize = 12.sp,
             textAlign = TextAlign.Center,
             color= Color(0xFFFFFFFF))
         Text("Обозначения",
             Modifier
-                .weight(0.33f)
-                .clickable { navController.navigate(NavRoutes.Designations.route) },
+                .weight(0.25f)
+                .clickable { navController.navigate(NavRoutes.Designations.route) }
+                .padding(vertical = 20.dp),
             fontSize = 12.sp,
             textAlign = TextAlign.Center,
             color= Color(0xFFFFFFFF))
         Text("Настройки",
             Modifier
-                .weight(0.33f)
-                .clickable { navController.navigate(NavRoutes.Settings.route) },
+                .weight(0.25f)
+                .clickable { navController.navigate(NavRoutes.Settings.route) }
+                .padding(vertical = 20.dp),
             fontSize = 12.sp,
             textAlign = TextAlign.Center,
             color= Color(0xFFFFFFFF))
