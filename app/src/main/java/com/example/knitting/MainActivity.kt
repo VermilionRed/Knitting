@@ -1,21 +1,23 @@
 package com.example.knitting
 
 import android.os.Bundle
-import android.view.WindowInsets
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -47,61 +50,73 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Main() {
     val navController = rememberNavController()
-    Column(
-        Modifier
-            //.windowInsetsPadding(WindowInsets.safeDrawing)
-            .fillMaxHeight(),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        NavHost(navController, startDestination = NavRoutes.Lessons.route) {
-            composable(NavRoutes.Home.route) { Home() }
-            composable(NavRoutes.Lessons.route) { Lessons() }
-            composable(NavRoutes.Designations.route) { Designations() }
-            composable(NavRoutes.Settings.route) { Settings() }
-        }
-        NavBar(navController = navController)
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing),
+        //  ^^^ This remains System UI bars.
+        contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
+        bottomBar = { NavBar(navController = navController) },
+    ) { innerPadding ->
+        NavigationGraph(
+            modifier = Modifier
+                .padding(innerPadding),
+            navController = navController
+        )
     }
 }
 
 @Composable
-fun NavBar(navController: NavController) {
-    val myColor = Color(0xFF485A6C)
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .background(myColor),
-        verticalAlignment = Alignment.CenterVertically
+fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = NavRoutes.Lessons.route
     ) {
-        NavBarButton(modifier = Modifier
-            .clickable { navController.navigate(NavRoutes.Home.route) }
-            .weight(0.25f)
-            .padding(vertical = 10.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.home),
-            contentDescription = "Главная"
-        )
-        NavBarButton(modifier = Modifier
-            .clickable { navController.navigate(NavRoutes.Lessons.route) }
-            .weight(0.25f)
-            .padding(vertical = 10.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.list),
-            contentDescription = "Уроки"
-        )
-        NavBarButton(
-            modifier = Modifier
-                .clickable { navController.navigate(NavRoutes.Designations.route) }
+        composable(NavRoutes.Home.route) { Home() }
+        composable(NavRoutes.Lessons.route) { Lessons() }
+        composable(NavRoutes.Designations.route) { Designations() }
+        composable(NavRoutes.Settings.route) { Settings() }
+    }
+}
+
+@Composable
+fun NavBar(navController: NavHostController) {
+    val myColor = Color(0xFF485A6C)
+    BottomAppBar(
+        containerColor = myColor,
+        actions = {
+            NavBarButton(modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.Home.route) }
                 .weight(0.25f)
                 .padding(vertical = 10.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.knitting),
-            contentDescription = "Обозначения",
-        )
-        NavBarButton(modifier = Modifier
-            .clickable { navController.navigate(NavRoutes.Settings.route) }
-            .weight(0.25f)
-            .padding(vertical = 10.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.settings),
-            contentDescription = "Настройки"
-        )
-    }
+                bitmap = ImageBitmap.imageResource(R.drawable.home),
+                contentDescription = "Главная"
+            )
+            NavBarButton(modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.Lessons.route) }
+                .weight(0.25f)
+                .padding(vertical = 10.dp),
+                bitmap = ImageBitmap.imageResource(R.drawable.list),
+                contentDescription = "Уроки"
+            )
+            NavBarButton(
+                modifier = Modifier
+                    .clickable { navController.navigate(NavRoutes.Designations.route) }
+                    .weight(0.25f)
+                    .padding(vertical = 10.dp),
+                bitmap = ImageBitmap.imageResource(R.drawable.knitting),
+                contentDescription = "Обозначения",
+            )
+            NavBarButton(modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.Settings.route) }
+                .weight(0.25f)
+                .padding(vertical = 10.dp),
+                bitmap = ImageBitmap.imageResource(R.drawable.settings),
+                contentDescription = "Настройки"
+            )
+        }
+    )
 }
 
 @Composable
@@ -113,7 +128,7 @@ fun NavBarButton(
     Column(modifier) {
         Image(
             modifier = Modifier
-                .size(40.dp)
+                .size(35.dp)
                 .align(Alignment.CenterHorizontally),
             bitmap = bitmap,
             contentDescription = contentDescription,
