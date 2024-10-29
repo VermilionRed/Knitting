@@ -5,9 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,10 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
@@ -26,9 +29,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,7 +62,7 @@ fun Main() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val myColor = Color(0xFF485A6C)
+    val darkBlue = Color(0xFF485A6C)
 
     Scaffold(
         modifier = Modifier
@@ -73,7 +73,7 @@ fun Main() {
         topBar = {
             TopAppBar(
                 colors = topAppBarColors(
-                    containerColor = myColor,
+                    containerColor = darkBlue,
                     titleContentColor = Color.White,
                 ),
                 title = {
@@ -91,26 +91,40 @@ fun Main() {
     }
 }
 
+//The function that controls the buttons. Throws it at other windows
 @Composable
 fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = NavRoutes.Lessons.route
+        startDestination = NavRoutes.Home.route
     ) {
         composable(NavRoutes.Home.route) { Home() }
         composable(NavRoutes.Lessons.route) { Lessons(navController) }
         composable(NavRoutes.Designations.route) { Designations() }
         composable(NavRoutes.Settings.route) { Settings() }
-        composable(NavRoutes.One.route) { One() }
+        composable(NavRoutes.LessonOne.route) { LessonOne(navController) }
+        composable(NavRoutes.LessonTwo.route) { LessonTwo(navController) }
+        composable(NavRoutes.LessonThree.route) { LessonThree(navController) }
     }
 }
 
+sealed class NavRoutes(val route: String) {
+    object Home : NavRoutes("Главная")
+    object Lessons : NavRoutes("Уроки")
+    object Designations : NavRoutes("Обозначения")
+    object Settings : NavRoutes("Настройки")
+    object LessonOne : NavRoutes("Урок №1")
+    object LessonTwo : NavRoutes("Урок №2")
+    object LessonThree : NavRoutes("Урок №3")
+}
+
+//Changing the bottom bar, buttons, images
 @Composable
 fun NavBar(navController: NavHostController) {
-    val myColor = Color(0xFF485A6C)
+    val darkBlue = Color(0xFF485A6C)
     BottomAppBar(
-        containerColor = myColor,
+        containerColor = darkBlue,
         actions = {
             NavBarButton(modifier = Modifier
                 .clickable { navController.navigate(NavRoutes.Home.route) }
@@ -145,6 +159,7 @@ fun NavBar(navController: NavHostController) {
     )
 }
 
+//Bottom bar button pattern, design
 @Composable
 fun NavBarButton(
     modifier: Modifier,
@@ -170,50 +185,165 @@ fun NavBarButton(
     }
 }
 
+//The home window
 @Composable
 fun Home() {
     Column(
         Modifier
-        //.fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth(),
-            bitmap = ImageBitmap.imageResource(R.drawable.yarn_balls),
-            contentScale = ContentScale.FillWidth,
-            contentDescription = "Вязание с нуля",
-        )
+        Box(modifier = Modifier) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                alpha = 0.3f,
+                bitmap = ImageBitmap.imageResource(R.drawable.yarn_balls),
+                contentScale = ContentScale.FillWidth,
+                contentDescription = "Вязание с нуля",
+            )
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+            ) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(70.dp),
+                    bitmap = ImageBitmap.imageResource(R.drawable.knitting_colored),
+                    contentDescription = "Вязание с нуля",
+                )
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(220.dp),
+                    bitmap = ImageBitmap.imageResource(R.drawable.title),
+                    contentDescription = "Вязание с нуля",
+                )
+            }
+        }
         Text(
             "Ваш прогресс:",
             Modifier
                 .padding(start = 20.dp, top = 10.dp),
-            fontSize = 30.sp
+            fontSize = 18.sp
         )
     }
 }
 
+//The lessons window
 @Composable
 fun Lessons(navController: NavHostController) {
-    val myColor = Color(0xFF485A6C)
+    val darkBlue = Color(0xFF485A6C)
     Column {
-        LessonButton(modifier = Modifier
-            .clickable { navController.navigate(NavRoutes.One.route) },
-            text = "ZZdng"
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonOne.route) }
+                .fillMaxWidth(),
+            text = "Урок №1"
+        )
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonTwo.route) }
+                .fillMaxWidth(),
+            text = "Урок №2"
+        )
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonThree.route) }
+                .fillMaxWidth(),
+            text = "Урок №3"
         )
     }
 }
 
+//Lesson button pattern, design
 @Composable
-fun One(){
-    Text(text = "kn df klvnfsvk f")
-}
-
-@Composable
-fun LessonButton(modifier: Modifier, text: String) {
+fun LessonButton(
+    modifier: Modifier,
+    text: String
+) {
     Text(
         text = text,
         modifier = modifier
+            .border(width = 1.dp, color = Color.Gray)
+            .padding(6.dp),
+        fontSize = 20.sp
     )
+}
+
+//Windows inside the lessons
+@Composable
+fun LessonOne(navController: NavHostController) {
+    val darkBlue = Color(0xFF485A6C)
+    Column(
+        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
+    ) {
+        ReturnButton(modifier = Modifier
+            .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
+            .clickable { navController.navigate(NavRoutes.Lessons.route) }
+            .padding(10.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
+            contentDescription = "Вернуться к урокам"
+        )
+        Text(text = "111")
+    }
+}
+
+@Composable
+fun LessonTwo(navController: NavHostController) {
+    val darkBlue = Color(0xFF485A6C)
+    Column(
+        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
+    ) {
+        ReturnButton(modifier = Modifier
+            .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
+            .clickable { navController.navigate(NavRoutes.Lessons.route) }
+            .padding(10.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
+            contentDescription = "Вернуться к урокам"
+        )
+        Text(text = "222")
+    }
+}
+
+@Composable
+fun LessonThree(navController: NavHostController) {
+    val darkBlue = Color(0xFF485A6C)
+    Column(
+        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
+    ) {
+        ReturnButton(modifier = Modifier
+            .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
+            .clickable { navController.navigate(NavRoutes.Lessons.route) }
+            .padding(10.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
+            contentDescription = "Вернуться к урокам"
+        )
+        Text(text = "333")
+    }
+}
+
+//Return button pattern, design
+@Composable
+fun ReturnButton(
+    modifier: Modifier,
+    bitmap: ImageBitmap,
+    contentDescription: String
+) {
+    Row(modifier) {
+        Image(
+            modifier = Modifier
+                .size(25.dp),
+            bitmap = bitmap,
+            contentDescription = contentDescription,
+        )
+        Text(
+            contentDescription,
+            Modifier
+                .align(Alignment.CenterVertically),
+            fontSize = 18.sp
+        )
+    }
 }
 
 @Composable
@@ -242,14 +372,6 @@ fun Settings() {
         Modifier.padding(30.dp),
         fontSize = 30.sp
     )
-}
-
-sealed class NavRoutes(val route: String) {
-    object Home : NavRoutes("Главная")
-    object Lessons : NavRoutes("Уроки")
-    object Designations : NavRoutes("Обозначения")
-    object Settings : NavRoutes("Настройки")
-    object One : NavRoutes("One")
 }
 
 @Preview(showBackground = true)
