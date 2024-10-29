@@ -16,10 +16,19 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,10 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
@@ -47,15 +56,31 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Main() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val myColor = Color(0xFF485A6C)
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing),
         //  ^^^ This remains System UI bars.
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
+        topBar = {
+            TopAppBar(
+                colors = topAppBarColors(
+                    containerColor = myColor,
+                    titleContentColor = Color.White,
+                ),
+                title = {
+                    Text(currentRoute.toString())
+                }
+            )
+        },
         bottomBar = { NavBar(navController = navController) },
     ) { innerPadding ->
         NavigationGraph(
@@ -74,9 +99,10 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         startDestination = NavRoutes.Lessons.route
     ) {
         composable(NavRoutes.Home.route) { Home() }
-        composable(NavRoutes.Lessons.route) { Lessons() }
+        composable(NavRoutes.Lessons.route) { Lessons(navController) }
         composable(NavRoutes.Designations.route) { Designations() }
         composable(NavRoutes.Settings.route) { Settings() }
+        composable(NavRoutes.One.route) { One() }
     }
 }
 
@@ -167,28 +193,27 @@ fun Home() {
 }
 
 @Composable
-fun Lessons() {
+fun Lessons(navController: NavHostController) {
     val myColor = Color(0xFF485A6C)
     Column {
-        Text(
-            "Уроки",
-            Modifier
-                .background(myColor)
-                .padding(vertical = 20.dp)
-                .fillMaxWidth(),
-            fontSize = 30.sp,
-            color = Color(0xFFFFFFFF)
-        )
-        Text(
-            "1 урок",
-            Modifier
-                //.background(myColor)
-                .padding(vertical = 20.dp)
-                .fillMaxWidth(),
-            fontSize = 30.sp,
-            //color = Color(0xFFFFFFFF)
+        LessonButton(modifier = Modifier
+            .clickable { navController.navigate(NavRoutes.One.route) },
+            text = "ZZdng"
         )
     }
+}
+
+@Composable
+fun One(){
+    Text(text = "kn df klvnfsvk f")
+}
+
+@Composable
+fun LessonButton(modifier: Modifier, text: String) {
+    Text(
+        text = text,
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -220,15 +245,15 @@ fun Settings() {
 }
 
 sealed class NavRoutes(val route: String) {
-    object Home : NavRoutes("home")
-    object Lessons : NavRoutes("lessons")
-    object Designations : NavRoutes("designations")
-    object Settings : NavRoutes("settings")
+    object Home : NavRoutes("Главная")
+    object Lessons : NavRoutes("Уроки")
+    object Designations : NavRoutes("Обозначения")
+    object Settings : NavRoutes("Настройки")
+    object One : NavRoutes("One")
 }
 
 @Preview(showBackground = true)
 @Composable
 fun HomePreview() {
     Main()
-    //Designations()
 }
