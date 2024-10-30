@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -97,7 +100,7 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = NavRoutes.Home.route
+        startDestination = NavRoutes.Designations.route
     ) {
         composable(NavRoutes.Home.route) { Home() }
         composable(NavRoutes.Lessons.route) { Lessons(navController) }
@@ -190,7 +193,6 @@ fun NavBarButton(
 fun Home() {
     Column(
         Modifier
-            .verticalScroll(rememberScrollState())
     ) {
         Box(modifier = Modifier) {
             Image(
@@ -201,9 +203,10 @@ fun Home() {
                 contentScale = ContentScale.FillWidth,
                 contentDescription = "Вязание с нуля",
             )
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
             ) {
                 Image(
                     modifier = Modifier
@@ -351,19 +354,78 @@ fun Designations() {
     Column(
         Modifier
     ) {
-        Text(
-            "Обозначения",
-            Modifier
-                .fillMaxWidth(),
-            fontSize = 30.sp
+        val desList = listOf(
+            Designation("Символ/Sumbol"),
+            Designation("US Crochet term"),
+            Designation("Обозначение"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("Start"),
+            Designation("Начало вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("ch, chain stitch"),
+            Designation("в.п., воздушная петля, петля, цепочка из петель"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
+
+            Image(ImageBitmap.imageResource(R.drawable.left_arrow)),
+            Designation("End"),
+            Designation("Конец вязания"),
         )
-        Text(
-            "Здесь будут условные обозначения",
-            Modifier.padding(top = 30.dp),
-            fontSize = 30.sp
-        )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            itemsIndexed(desList){ index, item ->
+                when (item) {
+                    is Designation -> {
+                        Text(
+                            item.text,
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(5.dp)
+                        )
+                    }
+                    is Image -> {
+                        Image(
+                            bitmap = item.imageBitmap,
+                            contentDescription = "image",
+                            modifier = Modifier
+                                .size(50.dp)
+                                .padding(5.dp)
+                        )
+                    }
+                }
+            }
+        }
     }
 }
+
+data class Designation(val text: String)
+data class Image(val imageBitmap: ImageBitmap)
 
 @Composable
 fun Settings() {
