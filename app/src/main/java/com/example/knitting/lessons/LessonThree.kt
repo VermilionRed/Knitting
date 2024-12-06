@@ -37,6 +37,7 @@ fun LessonThree(navController: NavHostController) {
             .fillMaxSize()
     ) {
         ReturnButton(modifier = Modifier
+            .padding(top = 20.dp)
             .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
             .clickable { navController.navigate(NavRoutes.Lessons.route) }
             .padding(10.dp),

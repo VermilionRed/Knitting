@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.knitting.lessons.LessonFive
+import com.example.knitting.lessons.LessonFour
 import com.example.knitting.lessons.LessonOne
+import com.example.knitting.lessons.LessonSix
 import com.example.knitting.lessons.LessonThree
 import com.example.knitting.lessons.LessonTwo
 
@@ -52,9 +55,9 @@ sealed class NavRoutes(val route: String) {
     object LessonOne : NavRoutes("Урок №1: Как правильно держать крючок и нить")
     object LessonTwo : NavRoutes("Урок №2: Набор петель крючком")
     object LessonThree : NavRoutes("Урок №3: Полустолбик")
-    object LessonFour : NavRoutes("Урок №4")
-    object LessonFive : NavRoutes("Урок №5")
-    object LessonSix : NavRoutes("Урок №6")
+    object LessonFour : NavRoutes("Урок №4: Столбик без накида")
+    object LessonFive : NavRoutes("Урок №5: Столбик с накидом")
+    object LessonSix : NavRoutes("Урок №6: Рельефные столбики")
 }
 
 //Changing the bottom bar, buttons, images
