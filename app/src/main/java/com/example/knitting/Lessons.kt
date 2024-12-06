@@ -3,9 +3,12 @@ package com.example.knitting
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,19 +29,37 @@ fun Lessons(navController: NavHostController) {
             modifier = Modifier
                 .clickable { navController.navigate(NavRoutes.LessonOne.route) }
                 .fillMaxWidth(),
-            text = "Урок №1"
+            text = "Урок №1: Как правильно держать крючок и нить"
         )
         LessonButton(
             modifier = Modifier
                 .clickable { navController.navigate(NavRoutes.LessonTwo.route) }
                 .fillMaxWidth(),
-            text = "Урок №2"
+            text = "Урок №2: Набор петель крючком"
         )
         LessonButton(
             modifier = Modifier
                 .clickable { navController.navigate(NavRoutes.LessonThree.route) }
                 .fillMaxWidth(),
-            text = "Урок №3"
+            text = "Урок №3: Полустолбик"
+        )
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonFour.route) }
+                .fillMaxWidth(),
+            text = "Урок №4"
+        )
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonFive.route) }
+                .fillMaxWidth(),
+            text = "Урок №5"
+        )
+        LessonButton(
+            modifier = Modifier
+                .clickable { navController.navigate(NavRoutes.LessonSix.route) }
+                .fillMaxWidth(),
+            text = "Урок №6"
         )
     }
 }
@@ -59,28 +80,20 @@ fun LessonButton(
 }
 
 //Windows inside the lessons
-@Composable
-fun LessonOne(navController: NavHostController) {
-    val darkBlue = Color(0xFF485A6C)
-    Column(
-        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
-    ) {
-        ReturnButton(modifier = Modifier
-            .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
-            .clickable { navController.navigate(NavRoutes.Lessons.route) }
-            .padding(10.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
-            contentDescription = "Вернуться к урокам"
-        )
-        Text(text = "111")
-    }
-}
+
+
+
+
+
 
 @Composable
-fun LessonTwo(navController: NavHostController) {
+fun LessonFour(navController: NavHostController) {
     val darkBlue = Color(0xFF485A6C)
     Column(
-        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
+        modifier = Modifier
+            .padding(vertical = 5.dp, horizontal = 15.dp)
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
     ) {
         ReturnButton(modifier = Modifier
             .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
@@ -94,10 +107,13 @@ fun LessonTwo(navController: NavHostController) {
 }
 
 @Composable
-fun LessonThree(navController: NavHostController) {
+fun LessonFive(navController: NavHostController) {
     val darkBlue = Color(0xFF485A6C)
     Column(
-        modifier = Modifier.padding(top = 5.dp, start = 5.dp)
+        modifier = Modifier
+            .padding(vertical = 5.dp, horizontal = 15.dp)
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
     ) {
         ReturnButton(modifier = Modifier
             .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
@@ -106,7 +122,27 @@ fun LessonThree(navController: NavHostController) {
             bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
             contentDescription = "Вернуться к урокам"
         )
-        Text(text = "333")
+        Text(text = "222")
+    }
+}
+
+@Composable
+fun LessonSix(navController: NavHostController) {
+    val darkBlue = Color(0xFF485A6C)
+    Column(
+        modifier = Modifier
+            .padding(vertical = 5.dp, horizontal = 15.dp)
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
+    ) {
+        ReturnButton(modifier = Modifier
+            .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
+            .clickable { navController.navigate(NavRoutes.Lessons.route) }
+            .padding(10.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
+            contentDescription = "Вернуться к урокам"
+        )
+        Text(text = "222")
     }
 }
 

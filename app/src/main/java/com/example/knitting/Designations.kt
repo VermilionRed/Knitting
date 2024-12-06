@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -261,10 +259,11 @@ fun Designations() {
             itemsIndexed(desList) { index, item ->
 
                 if (index == 0 || index == 1 || index == 2) {
-                    Box(modifier = Modifier
-                        .height(50.dp)
-                        .border(width = 1.dp, color = Color.Gray)
-                    ){
+                    Box(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .border(width = 1.dp, color = Color.Gray)
+                    ) {
                         when (item) {
                             is Designation -> {
                                 Text(
@@ -287,7 +286,7 @@ fun Designations() {
                         modifier = Modifier
                             .height(190.dp)
                             .border(width = 1.dp, color = Color.Gray)
-                    ){
+                    ) {
                         when (item) {
                             is Designation -> {
                                 Text(

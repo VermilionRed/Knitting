@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.knitting.lessons.LessonOne
+import com.example.knitting.lessons.LessonThree
+import com.example.knitting.lessons.LessonTwo
 
 //The function that controls the buttons. Throws it at other windows
 @Composable
@@ -35,6 +38,9 @@ fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
         composable(NavRoutes.LessonOne.route) { LessonOne(navController) }
         composable(NavRoutes.LessonTwo.route) { LessonTwo(navController) }
         composable(NavRoutes.LessonThree.route) { LessonThree(navController) }
+        composable(NavRoutes.LessonFour.route) { LessonFour(navController) }
+        composable(NavRoutes.LessonFive.route) { LessonFive(navController) }
+        composable(NavRoutes.LessonSix.route) { LessonSix(navController) }
     }
 }
 
@@ -43,9 +49,12 @@ sealed class NavRoutes(val route: String) {
     object Lessons : NavRoutes("Уроки")
     object Designations : NavRoutes("Обозначения")
     object Settings : NavRoutes("Настройки")
-    object LessonOne : NavRoutes("Урок №1")
-    object LessonTwo : NavRoutes("Урок №2")
-    object LessonThree : NavRoutes("Урок №3")
+    object LessonOne : NavRoutes("Урок №1: Как правильно держать крючок и нить")
+    object LessonTwo : NavRoutes("Урок №2: Набор петель крючком")
+    object LessonThree : NavRoutes("Урок №3: Полустолбик")
+    object LessonFour : NavRoutes("Урок №4")
+    object LessonFive : NavRoutes("Урок №5")
+    object LessonSix : NavRoutes("Урок №6")
 }
 
 //Changing the bottom bar, buttons, images
