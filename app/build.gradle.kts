@@ -2,12 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("kotlin-kapt")
+    id("androidx.room") version "2.6.1" apply false
+    id("com.google.devtools.ksp") version "2.0.21-1.0.27"
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.example.knitting"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.knitting"
@@ -55,10 +57,10 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.runtime.livedata)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)

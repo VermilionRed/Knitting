@@ -1,4 +1,4 @@
-package com.example.knitting.lessons
+package com.example.knitting.ui.lessons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -21,9 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.knitting.NavRoutes
 import com.example.knitting.R
-import com.example.knitting.ReturnButton
+import com.example.knitting.ui.navigation.NavRoutes
+import com.example.knitting.ui.navigation.ReturnButton
 
 @Composable
 fun LessonFive(navController: NavHostController) {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,14 +26,20 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.knitting.ui.navigation.NavBar
+import com.example.knitting.ui.navigation.NavigationGraph
+import com.example.knitting.ui.screens.ToggleButtonColumn
+import com.example.knitting.ui.screens.ToggleButtonViewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: ToggleButtonViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            Main()
+            //Main()
+            ToggleButtonColumn(viewModel)
         }
     }
 }

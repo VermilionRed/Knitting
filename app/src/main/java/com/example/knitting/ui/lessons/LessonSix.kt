@@ -1,4 +1,4 @@
-package com.example.knitting.lessons
+package com.example.knitting.ui.lessons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -18,33 +18,38 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.knitting.NavRoutes
 import com.example.knitting.R
-import com.example.knitting.ReturnButton
+import com.example.knitting.ui.navigation.NavRoutes
+import com.example.knitting.ui.navigation.ReturnButton
 
 @Composable
-fun LessonOne(navController: NavHostController) {
+fun LessonSix(navController: NavHostController) {
     val darkBlue = Color(0xFF485A6C)
     Column(
         modifier = Modifier
             .padding(vertical = 5.dp, horizontal = 15.dp)
             .verticalScroll(rememberScrollState())
+            .fillMaxSize()
     ) {
         ReturnButton(modifier = Modifier
             .padding(top = 20.dp)
-            .clickable { navController.navigate(NavRoutes.Lessons.route) }
             .border(width = 2.dp, color = darkBlue, shape = RoundedCornerShape(20.dp))
+            .clickable { navController.navigate(NavRoutes.Lessons.route) }
             .padding(10.dp),
             bitmap = ImageBitmap.imageResource(R.drawable.left_arrow),
             contentDescription = "Вернуться к урокам"
         )
         Text(
-            text = "КАК ДЕРЖАТЬ НИТЬ",
+            text = stringResource(R.string.L6_1),
+            Modifier.padding(top = 20.dp),
+
+            fontSize = 18.sp
+        )
+        Text(
+            text = "Лицевой (выпуклый) рельефный столбик с одним накидом",
             Modifier
                 .padding(20.dp)
                 .align(alignment = Alignment.CenterHorizontally),
@@ -52,25 +57,19 @@ fun LessonOne(navController: NavHostController) {
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = stringResource(R.string.L1_1),
+            text = stringResource(R.string.L6_2) +
+                    stringResource(R.string.L6_3) +
+                    stringResource(R.string.L6_4) +
+                    stringResource(R.string.L6_5),
             fontSize = 18.sp
         )
         Image(
             modifier = Modifier.padding(vertical = 20.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.how_to_hold_the_thread_1),
-            contentDescription = "how_to_hold_the_thread_1"
+            bitmap = ImageBitmap.imageResource(R.drawable.front_dc),
+            contentDescription = "front_dc"
         )
         Text(
-            text = stringResource(R.string.L1_2),
-            fontSize = 18.sp
-        )
-        Image(
-            modifier = Modifier.padding(vertical = 20.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.how_to_hold_the_thread_2),
-            contentDescription = "how_to_hold_the_thread_2"
-        )
-        Text(
-            text = "КАК ДЕРЖАТЬ КРЮЧОК",
+            text = "Изнаночный (вогнутый) рельефный столбик с одним накидом",
             Modifier
                 .padding(20.dp)
                 .align(alignment = Alignment.CenterHorizontally),
@@ -78,24 +77,45 @@ fun LessonOne(navController: NavHostController) {
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = stringResource(R.string.L1_3) +
-                    stringResource(R.string.L1_4),
+            text = stringResource(R.string.L6_6) +
+                    stringResource(R.string.L6_7) +
+                    stringResource(R.string.L6_8) +
+                    stringResource(R.string.L6_9),
             fontSize = 18.sp
         )
         Image(
             modifier = Modifier.padding(vertical = 20.dp),
-            bitmap = ImageBitmap.imageResource(R.drawable.how_to_hold_the_hook),
-            contentDescription = "how_to_hold_the_thread_1"
+            bitmap = ImageBitmap.imageResource(R.drawable.back_dc),
+            contentDescription = "back_dc"
         )
         Text(
-            text = stringResource(R.string.L1_5),
+            text = "Лицевой (выпуклый) рельефный столбик с двумя накидами",
+            Modifier
+                .padding(20.dp)
+                .align(alignment = Alignment.CenterHorizontally),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = stringResource(R.string.L6_10) +
+                    stringResource(R.string.L6_11),
             fontSize = 18.sp
+        )
+        Image(
+            modifier = Modifier.padding(vertical = 20.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.front_tr1),
+            contentDescription = "front_tr1"
+        )
+        Text(
+            text = stringResource(R.string.L6_12) +
+                    stringResource(R.string.L6_13) +
+                    stringResource(R.string.L6_14),
+            fontSize = 18.sp
+        )
+        Image(
+            modifier = Modifier.padding(vertical = 20.dp),
+            bitmap = ImageBitmap.imageResource(R.drawable.front_tr2),
+            contentDescription = "front_tr2"
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LessonOnePreview() {
-    LessonOne(navController = rememberNavController())
 }

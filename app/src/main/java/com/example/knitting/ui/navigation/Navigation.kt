@@ -1,4 +1,4 @@
-package com.example.knitting
+package com.example.knitting.ui.navigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -19,12 +19,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.knitting.lessons.LessonFive
-import com.example.knitting.lessons.LessonFour
-import com.example.knitting.lessons.LessonOne
-import com.example.knitting.lessons.LessonSix
-import com.example.knitting.lessons.LessonThree
-import com.example.knitting.lessons.LessonTwo
+import com.example.knitting.R
+import com.example.knitting.Settings
+import com.example.knitting.ui.lessons.LessonFive
+import com.example.knitting.ui.lessons.LessonFour
+import com.example.knitting.ui.lessons.LessonOne
+import com.example.knitting.ui.lessons.LessonSix
+import com.example.knitting.ui.lessons.LessonThree
+import com.example.knitting.ui.lessons.LessonTwo
+import com.example.knitting.ui.screens.Designations
+import com.example.knitting.ui.screens.Home
+import com.example.knitting.ui.screens.Lessons
 
 //The function that controls the buttons. Throws it at other windows
 @Composable
